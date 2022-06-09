@@ -6,7 +6,10 @@
     },
     data() {
       return {
-        value: [20,50],
+        value: [-0.25,0.25],
+        min: -1,
+        max: 1,
+        step: -1
       }
     }
   }
@@ -20,29 +23,47 @@
     </div>
 
     <div class="container">
-        <p>Parameter</p>
+        <p>Parameters</p>
 
         <div class="lineBlock">
             <div class="inputForm">
-                <label for="videoDuration">Video duraion (1-100s):</label>
-                <input type="number" id="videoDuration" name="videoDuration" min="1" max="100">
+                <label for="videoDuration">Video duration (1-100s):</label>
+                <input 
+                    type="number"
+                    id="videoDuration"
+                    name="videoDuration"
+                    min="1" 
+                    max="100"
+                    v-model="videoDuration">
             </div>
             <div class="inputForm">
-                <label for="voiceDuration">Voice duraion (1-100s):</label>
-                <input type="number" id="voiceDuration" name="voiceDuration" min="1" max="100">
+                <label for="voiceDuration">Voice duration (1-100s):</label>
+                <input 
+                    type="number" 
+                    id="voiceDuration" 
+                    name="voiceDuration" 
+                    min="1" 
+                    max="100"
+                    v-model="voiceDuration">
             </div>
         </div>
 
         <div class="sliderContent">
             <label for="criteriaRange">Voice Criteria Range: </label>
             <div class="slider">
-                <Slider id="criteriaRange" name="criteriaRange" v-model="value"/>
+                <Slider 
+                    id="criteriaRange" 
+                    name="criteriaRange" 
+                    v-model="value" 
+                    :min="min" 
+                    :max="max"
+                    :step="step"/>
             </div>
         </div>
 
         <div class="lineBlock">
-            <button class="submit" @click="submit">submit</button>
-            <button class="default" @click="default">default</button>
+            <button class="submit" @click="submit">Submit</button>
+            <button class="default" @click="default">Default</button>
         </div>
     </div>
 </template>
