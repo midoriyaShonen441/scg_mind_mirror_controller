@@ -1,18 +1,79 @@
 <script>
     import Slider from '@vueform/slider'
+    import axios from "axios"
     export default {
     components: {
       Slider,
     },
     data() {
       return {
-        value: [-0.25,0.25],
+        value: "",
         min: -1,
         max: 1,
-        step: -1
+        step: -1,
+        voiceDur:"",
+        videoDur:""
       }
-    }
+    },methods: {
+        redirectToHome(){
+            this.$router.push('/');
+        },
+        handleSubmit(){
+            try {
+                const payload = {
+                    videoDuration:this.videoDur,
+                    voiceDuration:this.voiceDur,
+                    voiceMin:this.value[0],
+                    voiceMax:this.value[1],
+                    isDefault: false                  
+                }
+
+                axios.post("http://localhost:3000/changeparam", payload);
+                alert("update parameter success!")
+
+            } catch(err){
+                alert("fail to update");
+                alert(err);
+                console.log(err);
+            }
+        },
+        handleDefault(){
+            this.value = [-0.25,0.25];
+            this.voiceDur = 10;
+            this.videoDur = 3;
+
+            const payload = {
+                videoDuration: 3,
+                voiceDuration: 10,
+                voiceMin: -0.25,
+                voiceMax: 0.25,
+                isDefault: true
+            }
+
+            try{
+                axios.post("http://localhost:3000/changeparam", payload)
+                alert("set to default value!");
+            }catch(err){
+                console.log(err)
+                alert("update fail");
+                alert(err);
+                
+            }
+        },
+        async updateParam(){
+            const paramUpdate = await axios.get("http://localhost:3000/getparam");
+            // console.log(paramUpdate.data);
+            this.value = [paramUpdate.data.voice_min_threshold, paramUpdate.data.voice_max_threshold];
+            this.voiceDur = paramUpdate.data.voice_duration;
+            this.videoDur = paramUpdate.data.video_duration;
+        }
+    },
+    beforeMount(){
+        this.updateParam();
+    },
+    mounted(){
   }
+}
 </script>
 
 <template>
@@ -62,8 +123,11 @@
         </div>
 
         <div class="lineBlock">
-            <button class="submit" @click="submit">Submit</button>
-            <button class="default" @click="default">Default</button>
+            <button class="submit" @click="handleSubmit">Submit</button>
+            <button class="default" @click="handleDefault">Default</button>
+        </div>
+        <div>
+            <button class="to-registerpage" @click="redirectToHome">Register</button>
         </div>
     </div>
 </template>
@@ -186,6 +250,19 @@
     color: rgb(107, 109, 103, 0.8);
     border-radius: 7px;
     background-color: rgba(16, 120, 185, 0.134);
+}
+
+.to-registerpage{
+    all: unset;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 5px 10px;
+    font-family: 'Palanquin Dark', sans-serif;
+    font-size: 14px;
+    color: white;
+    border-radius: 7px;
+    background-color: rgb(44, 72, 93);
+    cursor: pointer;
 }
 </style>
 

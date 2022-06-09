@@ -1,32 +1,25 @@
-<script setup>
-import MainControl from './components/MainControl.vue'
-</script>
 
 <template>
-  <header>
-    <!-- <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" /> -->
-
-    <!-- <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div> -->
-  </header>
 
   <main>
-    <MainControl />
-    <!-- <TheWelcome /> -->
+    <router-view/>
   </main>
 </template>
 
 <style>
 /* @import './assets/base.css'; */
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans Thai', sans-serif;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
   font-weight: normal;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 </style>
