@@ -60,18 +60,27 @@
                 
             }
         },
-        async updateParam(){
-            const paramUpdate = await axios.get("http://localhost:3000/getparam");
-            // console.log(paramUpdate.data);
-            this.value = [paramUpdate.data.voice_min_threshold, paramUpdate.data.voice_max_threshold];
-            this.voiceDur = paramUpdate.data.voice_duration;
-            this.videoDur = paramUpdate.data.video_duration;
+        updateParam(){
+
+            const fetchFunc = async () => {
+                const paramUpdate = await axios.get("http://localhost:3000/getparam");
+                console.log(paramUpdate.data);
+                this.value = [paramUpdate.data.voice_min_threshold, paramUpdate.data.voice_max_threshold];
+                this.voiceDur = 3
+                this.videoDur = 10
+                console.log(this.voiceDur, this.videoDur)
+            }
+
+            fetchFunc();
+
         }
     },
     beforeMount(){
         this.updateParam();
     },
     mounted(){
+        // console.log(this.voiceDur);
+        // console.log(this.videoDur);
   }
 }
 </script>
@@ -88,24 +97,22 @@
 
         <div class="lineBlock">
             <div class="inputForm">
-                <label for="videoDuration">Video duration (1-100s):</label>
+                <label >Video duration (1-100s):</label>
                 <input 
                     type="number"
                     id="videoDuration"
-                    name="videoDuration"
                     min="1" 
                     max="100"
-                    v-model="videoDuration">
+                    v-model="videoDur">
             </div>
             <div class="inputForm">
-                <label for="voiceDuration">Voice duration (1-100s):</label>
+                <label >Voice duration (1-100s):</label>
                 <input 
                     type="number" 
                     id="voiceDuration" 
-                    name="voiceDuration" 
                     min="1" 
                     max="100"
-                    v-model="voiceDuration">
+                    v-model="voiceDur">
             </div>
         </div>
 
