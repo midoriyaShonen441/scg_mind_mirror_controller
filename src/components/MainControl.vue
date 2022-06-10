@@ -66,8 +66,8 @@
                 const paramUpdate = await axios.get("http://localhost:3000/getparam");
                 console.log(paramUpdate.data);
                 this.value = [paramUpdate.data.voice_min_threshold, paramUpdate.data.voice_max_threshold];
-                this.voiceDur = 3
-                this.videoDur = 10
+                this.voiceDur = paramUpdate.data.voice_duration
+                this.videoDur = paramUpdate.data.video_duration
                 console.log(this.voiceDur, this.videoDur)
             }
 
